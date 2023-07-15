@@ -18,7 +18,11 @@ app.get('/notes', (req,res) =>
     res.sendFile(path.join(__dirname, '/public/notes.html'))
 );
 
-app.get('/api/notes', (req, res) => res.json(noteData)); 
+app.get('/api/notes', (req, res) => {
+  const dbData = fs.readFileSync('./db/db.json', 'utf8');
+  const dbParse = JSON.parse(dbData);
+  res.json(dbParse);
+}); 
 
 app.post('/api/notes', (req, res) => {
   const { title, text } = req.body;
@@ -27,18 +31,14 @@ app.post('/api/notes', (req, res) => {
     title,
     text,
   }
-  let dataVar;
 
-  fs.readFile('./db/db.json', (error, data) => {
-    dataVar = JSON.parse(data);
-    dataVar.push(newNote);
-    console.log(dataVar);
-    const dbArr = JSON.stringify(dataVar);
+  const dbData = fs.readFileSync('./db/db.json', 'utf8');
+  const dbParse = JSON.parse(dbData);
+  dbParse.push(newNote);
+  const newDb = JSON.stringify(dbParse);
 
-    fs.writeFile('./db/db.json', dbArr, (err) =>
-      err ? console.error(err) : console.log('Success!')
-    )
-  })
+  fs.writeFile('./db/db.json', newDb, (err) => 
+  err ? console.error(err) : console.log('Success!'))
 });
 
 app.listen(PORT, () =>
