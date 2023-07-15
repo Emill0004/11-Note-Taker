@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const noteData = require('./db/db.json');
 const fs = require('fs');
+const uuid = require('./helpers/uuid.js');
 
 const PORT = 3001;
 const app = express();
@@ -26,10 +27,12 @@ app.get('/api/notes', (req, res) => {
 
 app.post('/api/notes', (req, res) => {
   const { title, text } = req.body;
+  const id = uuid();
 
   const newNote = {
     title,
     text,
+    id,
   }
 
   const dbData = fs.readFileSync('./db/db.json', 'utf8');
