@@ -1,3 +1,4 @@
+// Dependencies
 const express = require('express');
 const path = require('path');
 const noteData = require('./db/db.json');
@@ -11,20 +12,24 @@ app.use(express.json());
 
 app.use(express.static('public'));
 
+// Homepage GET route
 app.get('/', (req,res) => 
     res.sendFile(path.join(__dirname, '/public/'))
 );
 
+// Notes page GET route
 app.get('/notes', (req,res) => 
     res.sendFile(path.join(__dirname, '/public/notes.html'))
 );
 
+// Api GET route
 app.get('/api/notes', (req, res) => {
   const dbData = fs.readFileSync('./db/db.json', 'utf8');
   const dbParse = JSON.parse(dbData);
   res.json(dbParse);
 }); 
 
+// Api POST route
 app.post('/api/notes', (req, res) => {
   const { title, text } = req.body;
   const id = uuid();
@@ -42,6 +47,7 @@ app.post('/api/notes', (req, res) => {
 
   fs.writeFile('./db/db.json', newDb, (err) => 
   err ? console.error(err) : console.log('Success!'))
+  window.location.reload();
 });
 
 app.listen(PORT, () =>
