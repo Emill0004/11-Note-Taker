@@ -22,6 +22,6 @@
 
   ## Info
   
-  [Deployed Application]((https://agile-castle-87281-8de3b48131e7.herokuapp.com/)https://agile-castle-87281-8de3b48131e7.herokuapp.com/)
+  [Deployed Application](https://agile-castle-87281-8de3b48131e7.herokuapp.com/)https://agile-castle-87281-8de3b48131e7.herokuapp.com/)
 
   GitHub: [Emill0004](https://github.com/Emill0004)
